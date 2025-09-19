@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Performance Management System</h1>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'performance-form')">Performance Form</button>
+            <button class="tab-button" onclick="openTab(event, 'admin-panel')">Admin Panel</button>
+            <button class="tab-button" onclick="openTab(event, 'dashboard')">Dashboard</button>
+        </div>
+
+        <!-- Performance Form -->
+        <div id="performance-form" class="tab-content active">
+            <div class="form-header card">
+                <div>
+                    <label for="employee-select">Select Employee:</label>
+                    <select id="employee-select">
+                        <option value="">-- Select an Employee --</option>
+                    </select>
+                </div>
+                 <div class="employee-info">
+                    <span><b>Manager:</b> <span id="manager-name"></span></span>
+                    <span><b>Position:</b> <span id="employee-position"></span></span>
+                    <span><b>Department:</b> <span id="employee-department"></span></span>
+                </div>
+            </div>
+
+            <div class="rating-legend card">
+                <h4>Rating Scale Guide</h4>
+                <p><strong>E++ (Outstanding):</strong> Exceeds all standards & expectations of the job.</p>
+                <p><strong>E+ (Exceeds Expectations):</strong> Exceeds most standards & expectations of the job.</p>
+                <p><strong>E (Meets Expectations):</strong> Meets standards & expectations of the job.</p>
+                <p><strong>E- (Below Expectations):</strong> Below standards & expectations of the job.</p>
+                <p><strong>E-- (Unsatisfactory):</strong> Does not meet standards & expectations of the job.</p>
+            </div>
+
+            <section class="card">
+                <h3>Individual Objectives <span id="objective-count-rules" class="rules-text"></span></h3>
+                <div class="table-wrapper">
+                    <table id="objectives-table">
+                        <thead>
+                            <tr>
+                                <th class="col-title">Title</th>
+                                <th class="col-desc">Description (SMART: Specific, Measurable...)</th>
+                                <th class="col-link">Linked Department Objective</th>
+                                <th class="col-weight">Weight</th>
+                                <th class="col-rating">End-Year Rating</th>
+                                <th class="col-score">Score</th>
+                                <th class="col-actions"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <button id="add-objective-btn" disabled>+ Add New Objective</button>
+                    <div class="total-weight">Total Weight: <span id="total-weight-span">0</span>%</div>
+                </div>
+            </section>
+            
+            <section class="card">
+                <h3>Core Competencies</h3>
+                <div class="table-wrapper">
+                    <table id="competencies-table">
+                         <thead>
+                            <tr>
+                                <th class="col-comp">Competency</th>
+                                <th class="col-rating">End-Year Rating</th>
+                                <th class="col-score">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="review-section card">
+                <h3>Performance Reviews</h3>
+                <div class="review-columns">
+                    <div>
+                        <h4>Mid-Year Review</h4>
+                        <label for="mid-year-employee-comments">Employee's Self-Assessment:</label>
+                        <textarea id="mid-year-employee-comments" placeholder="Employee's mid-year reflections..." disabled></textarea>
+                        <label for="mid-year-manager-comments">Manager's Comments:</label>
+                        <textarea id="mid-year-manager-comments" placeholder="Provide mid-year feedback and progress notes..."></textarea>
+                    </div>
+                    <div>
+                        <h4>End-Year Review</h4>
+                        <label for="end-year-employee-comments">Employee's Self-Assessment:</label>
+                        <textarea id="end-year-employee-comments" placeholder="Employee's final self-assessment..." disabled></textarea>
+                        <label for="end-year-manager-comments">Manager's Summary Comments:</label>
+                        <textarea id="end-year-manager-comments" placeholder="Provide a final summary of the year's performance..."></textarea>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="card">
+                <h3>Development Needs & Plan</h3>
+                <label for="development-plan" id="development-plan-label">Identify key development areas and create a plan for the upcoming year.</label>
+                <textarea id="development-plan" placeholder="E.g., Training on advanced project management, mentorship program, improving communication skills..."></textarea>
+            </section>
+
+            <section class="final-score-section card">
+                <h3>Overall Performance Summary</h3>
+                <div class="score-grid">
+                    <div>Objectives Score <b id="final-objective-score">0.00</b></div>
+                    <div>Competencies Score <b id="final-competency-score">0.00</b></div>
+                    <div class="overall-card">Overall Weighted Score <b id="overall-final-score">0.00</b></div>
+                    <div class="overall-card">Final Rating <b id="overall-final-grade">Not Rated</b></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-panel" class="tab-content">
+            <div class="card">
+                <h2>System Configuration</h2>
+                 <fieldset>
+                    <legend>Performance Weighting (by Job Role)</legend>
+                    <label for="job-role-select">Job Role:</label>
+                    <select id="job-role-select">
+                        <option value="leadership">Leadership</option>
+                        <option value="individual_contributor">Individual Contributor</option>
+                        <option value="operations">Operations</option>
+                    </select>
+                    <label for="objective-weight-input">Objectives Weight (%):</label>
+                    <input type="number" id="objective-weight-input" min="0" max="100">
+                    <label for="competency-weight-input">Competencies Weight (%):</label>
+                    <input type="number" id="competency-weight-input" min="0" max="100" readonly>
+                </fieldset>
+                 <fieldset>
+                    <legend>Rules & Policies</legend>
+                    <label for="min-objectives">Minimum Objectives:</label>
+                    <input type="number" id="min-objectives" min="1">
+                    <label for="max-objectives">Maximum Objectives:</label>
+                    <input type="number" id="max-objectives" min="1">
+                 </fieldset>
+                <button id="save-settings-btn" onclick="saveAdminSettings()">Save Settings</button>
+                <p id="admin-save-message"></p>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab-content">
+            <h2>Process Overview</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-card card">
+                    <h4>Objective Setting</h4>
+                    <div class="progress-bar"><div id="progress-objective-set"></div></div>
+                    <p><span id="dashboard-objective-set">0 / 0</span> Employees Completed</p>
+                </div>
+                <div class="dashboard-card card">
+                    <h4>Mid-Year Reviews</h4>
+                    <div class="progress-bar"><div id="progress-mid-year"></div></div>
+                    <p><span id="dashboard-mid-year">0 / 0</span> Employees Completed</p>
+                </div>
+                <div class="dashboard-card card">
+                    <h4>End-Year Reviews</h4>
+                    <div class="progress-bar"><div id="progress-end-year"></div></div>
+                    <p><span id="dashboard-end-year">0 / 0</span> Employees Completed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
